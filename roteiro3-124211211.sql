@@ -19,6 +19,7 @@ CREATE TABLE medicamentos(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     fabricante VARCHAR(100) NOT NULL,
+    precisa_receita BOOLEAN NOT NULL,
     preco DECIMAL(10, 2) NOT NULL
 );
 
@@ -36,7 +37,7 @@ CREATE TABLE entregas(
     id INT PRIMARY KEY AUTO_INCREMENT,
     funcionario_CPF CHAR(11) NOT NULL,
     medicamento_id INT NOT NULL,
-    endereco_entrega VARCHAR(200) NOT NULL,
+    endereco_entrega VARCHAR(200) NOT NULL foreign key (endereco_entrega) references clientes(endereco),
     quantidade INT NOT NULL,
     FOREIGN KEY (funcionario_CPF) REFERENCES funcionarios(CPF),
     FOREIGN KEY (medicamento_id) REFERENCES medicamentos(id)
@@ -46,6 +47,7 @@ CREATE TABLE clientes(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     endereco VARCHAR(200) NOT NULL,
+    tipo_endereco VARCHAR(50) NOT NULL CHECK (tipo_endereco IN ('Residencial', 'Comercial', 'Outro')),
     telefone VARCHAR(15) NOT NULL,
-    data_nascimento DATE NOT NULl
+    data_nascimento DATE NOT NULL
 );
